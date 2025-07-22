@@ -1,0 +1,61 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+h1 {
+  color: #333;
+}
+
+.game-info {
+  margin: 20px 0;
+  font-size: 18px;
+}
+
+table {
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+td {
+  width: 30px;
+  height: 30px;
+  border: 1px solid #ccc;
+  text-align: center;
+  cursor: pointer;
+  background-color: #f9f9f9;
+}
+
+td:hover {
+  background-color: #eee;
+}
+
+td.found {
+  /* background-color: #4caf50; */
+  background-color: #a5d6a7;
+}
+td.missed {
+  background-color: #ffcdd2;
+}
+
+#restartBtn {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+#restartBtn:hover {
+  background-color: #45a049;
+}
