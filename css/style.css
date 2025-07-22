@@ -18,7 +18,7 @@ h1 {
 
 .game-info {
   margin: 20px 0;
-  font-size: 18px;
+  font-size: clamp(0.875rem, 0.8036rem + 0.3571vw, 1.125rem);
 }
 
 table {

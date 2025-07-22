@@ -49,7 +49,6 @@ function initGame() {
 }
 
 // Обработка клика по ячейке
-
 function handleCellClick(event) {
   const cell = event.target;
   const row = cell.dataset.row;
