@@ -22,8 +22,8 @@ function initGame() {
   // Генерация случайных ячеек
   targetCells = [];
   while (targetCells.length < TARGET_CELLS) {
-    const row = Math.floor(Math.random() * ROWS) + 1;
-    const col = Math.floor(Math.random() * COLS) + 1;
+    const row = Math.floor(Math.random() * ROWS);
+    const col = Math.floor(Math.random() * COLS);
     const cellId = `${row}-${col}`;
 
     if (!targetCells.includes(cellId)) {
