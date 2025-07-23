@@ -59,6 +59,12 @@ td.missed {
 #restartBtn:hover {
   background-color: #45a049;
 }
+
+#restartBtn:disabled {
+  background-color: rgba(76, 175, 80, 0.347);
+  cursor: not-allowed;
+}
+
 #autoClicker {
   padding: 10px 20px;
   font-size: 16px;
@@ -68,4 +74,13 @@ td.missed {
   border: none;
   border-radius: 4px;
   cursor: pointer;
+}
+
+#autoClicker:hover {
+  background-color: darkgray;
+}
+
+#autoClicker:disabled {
+  background-color: rgba(128, 128, 128, 0.347);
+  cursor: not-allowed;
 }

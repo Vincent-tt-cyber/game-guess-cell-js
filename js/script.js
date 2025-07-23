@@ -71,6 +71,7 @@ function handleCellClick(event) {
     if (foundCells === TARGET_CELLS) {
       setTimeout(() => {
         alert("🎉 Поздравляем! Вы нашли все ячейки!");
+        restartBtn.disabled = false;
       }, 100);
     }
   } else {

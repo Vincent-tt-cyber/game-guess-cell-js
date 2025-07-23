@@ -5,8 +5,16 @@
 
 autoClicker.addEventListener("click", (event) => {
   const autoClicker = document.querySelector("#autoClicker");
+  const restartBtn = document.querySelector("#restartBtn");
   autoClickCells();
   autoClicker.disabled = true;
+
+  if (autoClicker.textContent === "Остановить") {
+    autoClicker.textContent = "Автопоиск";
+  } else {
+    autoClicker.textContent = "Остановить";
+    restartBtn.disabled = true;
+  }
 });
 
 function autoClickCells() {
@@ -15,7 +23,7 @@ function autoClickCells() {
   let foundCount = 0;
   const totalTargets = 10; // Кол-во ячеек для проверки
 
-  //   Клик на следующую ячейку
+  // Клик на следующую ячейку
   function clickNextCell() {
     // Если игра уже пройдена - останавить скрипт
     if (foundCount >= totalTargets) {
