@@ -7,6 +7,7 @@ const TARGET_CELLS = 10;
 const gameTable = document.querySelector("#gameTable");
 const cellsLeftDisplay = document.querySelector("#cellsLeft");
 const restartBtn = document.querySelector("#restartBtn");
+const autoClicker = document.querySelector("#autoClicker");
 
 // Игровые переменные
 let targetCells = [];
@@ -77,6 +78,9 @@ function handleCellClick(event) {
   }
 }
 
-restartBtn.addEventListener("click", initGame);
+restartBtn.addEventListener("click", () => {
+  initGame();
+  autoClicker.disabled = false;
+});
 
 initGame();

@@ -3,6 +3,12 @@
     Этот скрипт можно вставить в консоль браузера.
 */
 
+autoClicker.addEventListener("click", (event) => {
+  const autoClicker = document.querySelector("#autoClicker");
+  autoClickCells();
+  autoClicker.disabled = true;
+});
+
 function autoClickCells() {
   const cells = document.querySelectorAll("#gameTable td");
   let currentIndex = 0;
@@ -54,5 +60,3 @@ function autoClickCells() {
   }
   clickNextCell();
 }
-
-autoClickCells();
