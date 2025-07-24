@@ -12,9 +12,39 @@ const autoClicker = document.querySelector("#autoClicker");
 // Игровые переменные
 let targetCells = [];
 let foundCells = 0;
+let timerInterval;
+
+function startTimer() {
+  let timer = 60;
+  document.querySelector("#timer").textContent = timer;
+
+  // Очистка прошлого таймера при новой игре
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+
+  timerInterval = setInterval(() => {
+    timer--;
+    document.querySelector("#timer").textContent = timer;
+
+    if (timer <= 0) {
+      clearInterval(timerInterval);
+
+      // Блокировка дальнейших кликов
+      document.querySelectorAll("td").forEach((cell) => {
+        cell.removeEventListener("click", handleCellClick);
+      });
+      restartBtn.disabled = false;
+      alert("Время вышло!");
+    }
+  }, 1000);
+}
 
 // Инициализация игры
 function initGame() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
   // Чистка таблицы
   gameTable.innerHTML = "";
   foundCells = 0;
@@ -69,6 +99,9 @@ function handleCellClick(event) {
 
     // Проверка на победу
     if (foundCells === TARGET_CELLS) {
+      // Остановка таймера
+      clearInterval(timerInterval);
+
       setTimeout(() => {
         alert("🎉 Поздравляем! Вы нашли все ячейки!");
         restartBtn.disabled = false;
@@ -82,6 +115,8 @@ function handleCellClick(event) {
 restartBtn.addEventListener("click", () => {
   initGame();
   autoClicker.disabled = false;
+  autoClicker.textContent = "Автопоиск";
+  startTimer();
 });
 
 initGame();
