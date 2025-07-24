@@ -34,6 +34,7 @@ function startTimer() {
       document.querySelectorAll("td").forEach((cell) => {
         cell.removeEventListener("click", handleCellClick);
       });
+      autoClicker.disabled = true;
       restartBtn.disabled = false;
       alert("Время вышло!");
     }
@@ -112,6 +113,7 @@ function handleCellClick(event) {
   }
 }
 
+// Обработка клика по кнопке "Новая игра"
 restartBtn.addEventListener("click", () => {
   initGame();
   autoClicker.disabled = false;
