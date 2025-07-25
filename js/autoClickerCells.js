@@ -1,69 +1,58 @@
-/* 
-    Для быстрой проверки игры, можно использовать автоматический клик по ячейкам. 
-    Этот скрипт можно вставить в консоль браузера.
-*/
-
-autoClicker.addEventListener("click", (event) => {
-  const autoClicker = document.querySelector("#autoClicker");
-  const restartBtn = document.querySelector("#restartBtn");
-  autoClickCells();
-  autoClicker.disabled = true;
-
+autoClicker.addEventListener("click", function () {
   if (autoClicker.textContent === "Остановить") {
+    // Если уже в процессе автопоиска - останавливаем
     autoClicker.textContent = "Автопоиск";
-  } else {
-    restartBtn.disabled = true;
+    return;
   }
+
+  // Начинаем автопоиск
+  autoClicker.textContent = "Остановить";
+  restartBtn.disabled = true;
+  autoClickRandomCells();
 });
 
-function autoClickCells() {
-  const cells = document.querySelectorAll("#gameTable td");
-  let currentIndex = 0;
+function autoClickRandomCells() {
+  const cells = Array.from(document.querySelectorAll("#gameTable td"));
   let foundCount = 0;
-  const totalTargets = 10; // Кол-во ячеек для проверки
+  const totalTargets = currentTargetCount; // Используем текущее количество целей
 
-  // Клик на следующую ячейку
-  function clickNextCell() {
-    // Если игра уже пройдена - останавить скрипт
-    if (foundCount >= totalTargets) {
-      return;
-    }
+  // Фильтруем только не проверенные ячейки
+  let availableCells = cells.filter(
+    (cell) =>
+      !cell.classList.contains("found") && !cell.classList.contains("missed")
+  );
 
-    // Если прошли все ячейки - останавливаемся
-    if (currentIndex >= cells.length) {
-      console.log(
-        `Все ячейки проверены, но найдены только ${foundCount} из ${totalTargets}.`
-      );
-      return;
-    }
-
-    const cell = cells[currentIndex];
-
-    // Клик только по не проверенным ячейкам
+  function clickRandomCell() {
+    // Проверяем условия остановки
     if (
-      !cell.classList.contains("found") &&
-      !cell.classList.contains("missed")
+      autoClicker.textContent !== "Остановить" ||
+      foundCount >= totalTargets ||
+      availableCells.length === 0
     ) {
-      cell.click();
+      autoClicker.textContent = "Автопоиск";
+      restartBtn.disabled = false;
+      return;
     }
 
+    // Выбираем случайную ячейку из доступных
+    const randomIndex = Math.floor(Math.random() * availableCells.length);
+    const cell = availableCells[randomIndex];
+
+    // Кликаем по ячейке
+    cell.click();
+
+    // Обновляем счетчик найденных
     if (cell.classList.contains("found")) {
       foundCount++;
-      console.log(
-        "Найдена ячейка",
-        foundCount,
-        "из",
-        totalTargets,
-        ":",
-        cell.dataset.row,
-        "-",
-        cell.dataset.col
-      );
+      console.log(`Найдена ячейка ${foundCount} из ${totalTargets}`);
     }
 
-    currentIndex++;
+    // Удаляем ячейку из доступных
+    availableCells = availableCells.filter((c) => c !== cell);
 
-    setTimeout(clickNextCell, 100);
+    // Запускаем следующий клик с задержкой
+    setTimeout(clickRandomCell, 100); // Задержка 300мс между кликами
   }
-  clickNextCell();
+
+  clickRandomCell();
 }
