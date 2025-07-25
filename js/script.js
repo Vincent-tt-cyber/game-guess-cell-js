@@ -13,6 +13,8 @@ const autoClicker = document.querySelector("#autoClicker");
 let targetCells = [];
 let foundCells = 0;
 let timerInterval;
+let isFirstClick = true;
+let currentTargetCount = 1;
 
 function startTimer() {
   let timer = 60;
@@ -49,11 +51,16 @@ function initGame() {
   // Чистка таблицы
   gameTable.innerHTML = "";
   foundCells = 0;
-  cellsLeftDisplay.textContent = TARGET_CELLS;
+  isFirstClick = true;
+
+  // Случайное кол-во ячеек
+  currentTargetCount = Math.floor(Math.random() * (TARGET_CELLS + 1));
+  cellsLeftDisplay.textContent = currentTargetCount;
+  document.querySelector("#timer").textContent = 60;
 
   // Генерация случайных ячеек
   targetCells = [];
-  while (targetCells.length < TARGET_CELLS) {
+  while (targetCells.length < currentTargetCount) {
     const row = Math.floor(Math.random() * ROWS);
     const col = Math.floor(Math.random() * COLS);
     const cellId = `${row}-${col}`;
@@ -92,14 +99,20 @@ function handleCellClick(event) {
     return;
   }
 
+  // Первый клик
+  if (isFirstClick) {
+    startTimer();
+    isFirstClick = false;
+  }
+
   // Проверка ячейки
   if (targetCells.includes(cellId)) {
     cell.classList.add("found");
     foundCells++;
-    cellsLeftDisplay.textContent = TARGET_CELLS - foundCells;
+    cellsLeftDisplay.textContent = currentTargetCount - foundCells;
 
     // Проверка на победу
-    if (foundCells === TARGET_CELLS) {
+    if (foundCells === currentTargetCount) {
       // Остановка таймера
       clearInterval(timerInterval);
 
@@ -115,10 +128,9 @@ function handleCellClick(event) {
 
 // Обработка клика по кнопке "Новая игра"
 restartBtn.addEventListener("click", () => {
+  isFirstClick = true; // Сброс первого клика
   initGame();
   autoClicker.disabled = false;
-  autoClicker.textContent = "Автопоиск";
-  startTimer();
 });
 
 initGame();

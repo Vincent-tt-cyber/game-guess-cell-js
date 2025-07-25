@@ -12,7 +12,6 @@ autoClicker.addEventListener("click", (event) => {
   if (autoClicker.textContent === "Остановить") {
     autoClicker.textContent = "Автопоиск";
   } else {
-    autoClicker.textContent = "Остановить";
     restartBtn.disabled = true;
   }
 });
